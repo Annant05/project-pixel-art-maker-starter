@@ -9,12 +9,6 @@ let pixelCanvas, canvasHeight, canvasWidth, selectedColor;
 
 pixelCanvas = $("#pixelCanvas");
 
-// Function that helps in drawing.
-function drawOnCanvas() {
-
-
-
-}
 
 function makeGrid() {
     // Delete the old grid from table.
@@ -26,10 +20,6 @@ function makeGrid() {
     // We take input of inputWidth from the form using jquery
     canvasWidth = $("#inputWidth").val();
 
-    // We take input of selected color for drawing.
-    selectedColor = $("#colorPicker").val();
-    console.log("click Detected on submit");
-    console.log("COLOR : " + selectedColor);
 
     // Create the table single row with cells.
     let single_row = "";
@@ -49,5 +39,47 @@ function makeGrid() {
     console.log(canvas);
     $("#pixelCanvas").append(canvas);
 
-    drawOnCanvas();
+    // drawOnCanvas();
 }
+
+$(document).ready(function () {
+    pixelCanvas.click(function (e) {
+        // We take input of selected color for drawing.
+        selectedColor = $("#colorPicker").val();
+        console.log("click Detected on submit");
+        console.log("COLOR : " + selectedColor);
+
+
+        // console.log("in The click function : " + toString(e));
+        const clickedCell = $(e.target).closest("td");
+        // console.log("clicked Cell : " + toString(clickedCell));
+
+        if (!clickedCell.hasClass("colored")) {
+
+            clickedCell.attr("style", " background-color: " + selectedColor + " ;")
+            clickedCell.attr("class", "colored");
+
+        } else {
+            clickedCell.removeAttr("style");
+            clickedCell.removeClass("colored");
+
+        }
+
+
+    });
+});
+
+/*
+$(document).ready(function () {
+    $("#tblDatatr:has(td)").mouseover(function (e) {
+        $(this).css("cursor", "pointer");
+    });
+    $("#tblDatatr:has(td)").click(function (e) {
+        $("#tblData td").removeClass("highlight");
+        var clickedCell = $(e.target).closest("td");
+        clickedCell.addClass("highlight");
+        $("#spnText").html(
+            'Clicked table cell value is: <b> ' + clickedCell.text() + '</b>');
+    });
+});
+*/
