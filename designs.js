@@ -5,55 +5,49 @@
 
 $("#submit_size").click(makeGrid);
 
+let pixelCanvas, canvasHeight, canvasWidth, selectedColor;
 
-let rows, columns, selectedColor, gridCreated = false;
+pixelCanvas = $("#pixelCanvas");
 
-// We take input  of inputHeight/horizontalRows  from the form using jquery.
-console.log("click Detected on submit");
-rows = $("#inputHeight").val();
-console.log("ROWS : " + rows);
+// Function that helps in drawing.
+function drawOnCanvas() {
 
-// We take input of inputWidth/VerticalColumns from the form using jquery
-columns = $("#inputWidth").val();
-console.log("COLUMNS : " + columns);
-
-// We take input of selected color for drawing.
-selectedColor = $("#colorPicker").val();
-console.log("COLOR : " + selectedColor);
-
-
-function makeGrid() {
-
-    // initially grid is empty i.e. table has 0 cells.
-
-
-    // initially the no of cells in a row is empty or 0.
-
-    // Create a no of rows with the no of columns generated above.
-    // ex.: <tr><td></td><tr>  this will create a grid.
-
-    if (!gridCreated ) \
-        for (let trow = 0; trow <= rows; trow++) {
-            // console.log("table_col in  row creating loop : " + tablecol);
-            let tablecol;
-            // create a no of cells for a row.  ex. : <td><td> equals to one cell.
-            for (let tcell = 0; tcell <= columns; tcell++) {
-                tablecol += "<td></td>";
-                // console.log("table_col in loop : " + tablecol);
-            }
-            // console.log("table_col  bottom outside loop : " + tablecol);
-
-            // add all the generated rows in the table.
-            // console.log("tablegrid = " + tableGrid);
-            $("#pixelCanvas").append("<tr>" + tablecol + "</tr>");
-        }
-        gridCreated = true;
-    } else {
-        console.log("Grid already Created");
-    }
-
-    // append the grid to the table tag to display.
 
 
 }
 
+function makeGrid() {
+    // Delete the old grid from table.
+    pixelCanvas.children().remove();
+
+    // We take input  of inputHeight  from the form using jquery.
+    canvasHeight = $("#inputHeight").val();
+
+    // We take input of inputWidth from the form using jquery
+    canvasWidth = $("#inputWidth").val();
+
+    // We take input of selected color for drawing.
+    selectedColor = $("#colorPicker").val();
+    console.log("click Detected on submit");
+    console.log("COLOR : " + selectedColor);
+
+    // Create the table single row with cells.
+    let single_row = "";
+    console.log("COLUMNS : " + canvasWidth);
+    for (let noOfCells = 0; noOfCells <= canvasWidth; noOfCells++) {
+        single_row += "<td></td>";
+        // console.log("table_col in loop : " + tablecol);
+    }
+
+    //create  multiple rows using the above single row.
+    let canvas = "";
+    console.log("ROWS : " + canvasHeight);
+    for (let noOfRows = 0; noOfRows <= canvasHeight; noOfRows++) {
+        canvas += '<tr>' + single_row + '</tr>';
+    }
+
+    console.log(canvas);
+    $("#pixelCanvas").append(canvas);
+
+    drawOnCanvas();
+}
